@@ -29,6 +29,21 @@ async def create_birthday(birthday_in: BirthdayCreate):
 async def get_birthdays():
     return fake_database
 
+@app.get("/birthdays/upcoming", response_model=list[Birthday])
+async def get_upcoming_birthdays(days: int = 30):
+    upcoming_birthdays = [x for x in fake_database if x.days_until_next_birthday <= days]
+    upcoming_birthdays.sort(key=lambda x: x.days_until_next_birthday)
+    return upcoming_birthdays
+
+@app.get("/birthdays/{birthday_id}", response_model=Birthday)
+async def get_birthday(birthday_id: int):
+    birthday = next((b for b in fake_database if b.id == birthday_id), None)
+
+    if not birthday:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Nie znaleziono urodzin o podanym ID")
+
+    return birthday
+
 @app.put("/birthdays/{birthday_id}", response_model=Birthday)
 async def update_birthday(birthday_id: int, birthday_in: BirthdayCreate):
     existing_birthday = next((b for b in fake_database if b.id == birthday_id), None)
