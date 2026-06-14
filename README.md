@@ -14,3 +14,5 @@ API do zarządzania urodzinami znajomych i wysyłania przypomnień. Projekt budo
 * `GET /birthdays` - Pobieranie wszystkich urodzin
 * `PUT /birthdays/{id}` - Aktualizacja danych
 * `DELETE /birthdays/{id}` - Usuwanie rekordu
+* `GET /birthdays/upcoming` - Pobieranie nadchodzących urodzin
+* `GET /birthdays/{id}` - Pobieranie konkretnych urodzin po ID

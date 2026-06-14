@@ -1,7 +1,9 @@
-from pydantic import BaseModel, Field, computed_field
+from pydantic import BaseModel, Field, computed_field, ConfigDict
 from datetime import date
 
 class BirthdayCreate(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    
     name: str = Field(..., min_length=2, max_length=50, description="Imię solenizanta/solenizantki")
     surname: str = Field(..., min_length=2, max_length=50, description="Nazwisko solenizanta/solenizantki")
     date_of_birth: date = Field(..., description="Data urodzenia w formacie YYYY-MM-DD")
